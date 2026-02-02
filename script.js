@@ -3,7 +3,6 @@ const API_BASE_URL = 'http://localhost:5000/api';
 
 // State Management
 let currentMood = null;
-let conversationHistory = [];
 
 // DOM Elements
 const reviewInput = document.getElementById('reviewInput');
@@ -21,13 +20,6 @@ const recommendationsSection = document.getElementById('recommendationsSection')
 const recommendationsSubtitle = document.getElementById('recommendationsSubtitle');
 const moviesGrid = document.getElementById('moviesGrid');
 const loadingOverlay = document.getElementById('loadingOverlay');
-
-// AI Chat Elements
-const aiInput = document.getElementById('aiInput');
-const askAiBtn = document.getElementById('askAiBtn');
-const chatMessages = document.getElementById('chatMessages');
-const chatContainer = document.getElementById('chatContainer');
-const quickPromptBtns = document.querySelectorAll('.quick-prompt-btn');
 
 /* ============================================
    SENTIMENT ANALYSIS
@@ -224,146 +216,6 @@ function createMovieCard(movie) {
 
     return card;
 }
-
-/* ============================================
-   AI ASSISTANT CHAT
-   ============================================ */
-
-// Handle AI chat submission
-async function sendAIMessage() {
-    const message = aiInput.value.trim();
-
-    if (!message) {
-        showNotification('Please enter a question', 'warning');
-        return;
-    }
-
-    // Hide welcome message
-    document.querySelector('.chat-welcome')?.classList.add('hidden');
-
-    // Add user message to chat
-    addMessageToChat('user', message);
-
-    // Clear input
-    aiInput.value = '';
-
-    // Show typing indicator
-    const typingId = addTypingIndicator();
-
-    try {
-        const response = await fetch(`${API_BASE_URL}/ask_ai`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                message: message,
-                conversation_history: conversationHistory
-            })
-        });
-
-        const data = await response.json();
-
-        // Remove typing indicator
-        removeTypingIndicator(typingId);
-
-        if (data.error && !data.response) {
-            showNotification('AI assistant is not configured. Check OPENAI_API_KEY in .env file', 'error');
-            addMessageToChat('ai', 'Sorry, the AI assistant is not currently available. Please  configure your OpenAI API key in the .env file.');
-            return;
-        }
-
-        // Add AI response to chat
-        addMessageToChat('ai', data.response);
-
-        // Update conversation history
-        conversationHistory.push(
-            { role: 'user', content: message },
-            { role: 'assistant', content: data.response }
-        );
-
-        // Keep only last 10 messages to manage token usage
-        if (conversationHistory.length > 10) {
-            conversationHistory = conversationHistory.slice(-10);
-        }
-
-    } catch (error) {
-        removeTypingIndicator(typingId);
-        console.error('Error asking AI:', error);
-        showNotification('Failed to get AI response. Make sure the server is running!', 'error');
-        addMessageToChat('ai', 'Sorry, I encountered an error. Please try again.');
-    }
-}
-
-// Add message to chat
-function addMessageToChat(sender, text) {
-    const messageDiv = document.createElement('div');
-    messageDiv.className = `chat-message ${sender}`;
-
-    const avatar = sender === 'ai' ? '🤖' : '👤';
-
-    messageDiv.innerHTML = `
-        <div class="message-avatar">${avatar}</div>
-        <div class="message-bubble">
-            <div class="message-text">${text}</div>
-        </div>
-    `;
-
-    chatMessages.appendChild(messageDiv);
-
-    // Scroll to bottom
-    chatContainer.scrollTop = chatContainer.scrollHeight;
-}
-
-// Add typing indicator
-function addTypingIndicator() {
-    const typingDiv = document.createElement('div');
-    typingDiv.className = 'chat-message ai typing-message';
-    typingDiv.id = 'typing-indicator';
-
-    typingDiv.innerHTML = `
-        <div class="message-avatar">🤖</div>
-        <div class="message-bubble">
-            <div class="typing-indicator">
-                <div class="typing-dot"></div>
-                <div class="typing-dot"></div>
-                <div class="typing-dot"></div>
-            </div>
-        </div>
-    `;
-
-    chatMessages.appendChild(typingDiv);
-    chatContainer.scrollTop = chatContainer.scrollHeight;
-
-    return 'typing-indicator';
-}
-
-// Remove typing indicator
-function removeTypingIndicator(id) {
-    const indicator = document.getElementById(id);
-    if (indicator) {
-        indicator.remove();
-    }
-}
-
-// AI button click handler
-askAiBtn.addEventListener('click', sendAIMessage);
-
-// Enter key to send
-aiInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-        e.preventDefault();
-        sendAIMessage();
-    }
-});
-
-// Quick prompt buttons
-quickPromptBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        aiInput.value = btn.dataset.prompt;
-        sendAIMessage();
-    });
-});
 
 /* ============================================
    UTILITY FUNCTIONS
