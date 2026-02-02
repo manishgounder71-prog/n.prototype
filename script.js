@@ -3,6 +3,7 @@ const API_BASE_URL = 'http://localhost:5000/api';
 
 // State Management
 let currentMood = null;
+let conversationHistory = [];
 
 // DOM Elements
 const reviewInput = document.getElementById('reviewInput');
@@ -21,6 +22,13 @@ const recommendationsSubtitle = document.getElementById('recommendationsSubtitle
 const moviesGrid = document.getElementById('moviesGrid');
 const loadingOverlay = document.getElementById('loadingOverlay');
 
+// AI Chat Elements
+const aiInput = document.getElementById('aiInput');
+const askAiBtn = document.getElementById('askAiBtn');
+const chatMessages = document.getElementById('chatMessages');
+const chatContainer = document.getElementById('chatContainer');
+const quickPromptBtns = document.querySelectorAll('.quick-prompt-btn');
+
 /* ============================================
    SENTIMENT ANALYSIS
    ============================================ */
@@ -28,14 +36,14 @@ const loadingOverlay = document.getElementById('loadingOverlay');
 // Analyze sentiment when button is clicked
 analyzeBtn.addEventListener('click', async () => {
     const text = reviewInput.value.trim();
-    
+
     if (!text) {
         showNotification('Please enter a movie review to analyze', 'warning');
         return;
     }
-    
+
     showLoading();
-    
+
     try {
         const response = await fetch(`${API_BASE_URL}/analyze_sentiment`, {
             method: 'POST',
@@ -44,21 +52,21 @@ analyzeBtn.addEventListener('click', async () => {
             },
             body: JSON.stringify({ text: text })
         });
-        
+
         const data = await response.json();
-        
+
         if (data.error) {
             showNotification(data.error, 'error');
             hideLoading();
             return;
         }
-        
+
         displaySentimentResults(data);
         hideLoading();
-        
+
         // Scroll to results
         sentimentResults.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        
+
     } catch (error) {
         console.error('Error analyzing sentiment:', error);
         showNotification('Failed to analyze sentiment. Make sure the server is running!', 'error');
@@ -70,27 +78,27 @@ analyzeBtn.addEventListener('click', async () => {
 function displaySentimentResults(data) {
     // Show results section
     sentimentResults.classList.remove('hidden');
-    
+
     // Update emoji and label
     sentimentEmoji.textContent = data.emoji;
     sentimentLabel.textContent = data.sentiment.charAt(0).toUpperCase() + data.sentiment.slice(1);
-    
+
     // Update confidence bar
     confidenceFill.style.width = `${data.confidence}%`;
     confidenceValue.textContent = `${data.confidence}%`;
-    
+
     // Update sentiment scores
     scorePositive.textContent = `${Math.round(data.scores.positive * 100)}%`;
     scoreNeutral.textContent = `${Math.round(data.scores.neutral * 100)}%`;
     scoreNegative.textContent = `${Math.round(data.scores.negative * 100)}%`;
-    
+
     // Apply color based on sentiment
     const sentimentColors = {
         'positive': 'var(--gradient-success)',
         'negative': 'var(--gradient-secondary)',
         'neutral': 'var(--gradient-accent)'
     };
-    
+
     confidenceFill.style.background = sentimentColors[data.sentiment] || 'var(--gradient-success)';
 }
 
@@ -102,13 +110,13 @@ function displaySentimentResults(data) {
 moodCards.forEach(card => {
     card.addEventListener('click', async () => {
         const mood = card.dataset.mood;
-        
+
         // Update active state
         moodCards.forEach(c => c.classList.remove('active'));
         card.classList.add('active');
-        
+
         currentMood = mood;
-        
+
         // Get recommendations
         await getRecommendations(mood);
     });
@@ -117,30 +125,30 @@ moodCards.forEach(card => {
 // Fetch recommendations based on mood
 async function getRecommendations(mood) {
     showLoading();
-    
+
     try {
         const response = await fetch(`${API_BASE_URL}/get_recommendations`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ 
+            body: JSON.stringify({
                 mood: mood,
-                limit: 6 
+                limit: 6
             })
         });
-        
+
         const data = await response.json();
-        
+
         if (data.error) {
             showNotification(data.error, 'error');
             hideLoading();
             return;
         }
-        
+
         displayRecommendations(data);
         hideLoading();
-        
+
     } catch (error) {
         console.error('Error fetching recommendations:', error);
         showNotification('Failed to fetch recommendations. Make sure the server is running!', 'error');
@@ -152,7 +160,7 @@ async function getRecommendations(mood) {
 function displayRecommendations(data) {
     // Show recommendations section
     recommendationsSection.classList.remove('hidden');
-    
+
     // Update subtitle
     const moodEmojis = {
         'happy': '😊',
@@ -162,18 +170,18 @@ function displayRecommendations(data) {
         'scared': '😱',
         'inspired': '💪'
     };
-    
+
     recommendationsSubtitle.textContent = `${moodEmojis[data.mood]} ${data.description}`;
-    
+
     // Clear previous movies
     moviesGrid.innerHTML = '';
-    
+
     // Add movie cards
     data.recommendations.forEach(movie => {
         const movieCard = createMovieCard(movie);
         moviesGrid.appendChild(movieCard);
     });
-    
+
     // Scroll to recommendations
     setTimeout(() => {
         recommendationsSection.scrollIntoView({ behavior: 'smooth' });
@@ -184,12 +192,12 @@ function displayRecommendations(data) {
 function createMovieCard(movie) {
     const card = document.createElement('div');
     card.className = 'movie-card';
-    
+
     // Create genres HTML
     const genresHTML = movie.genres
         .map(genre => `<span class="genre-tag">${genre}</span>`)
         .join('');
-    
+
     card.innerHTML = `
         <img src="${movie.poster}" alt="${movie.title}" class="movie-poster" 
              onerror="this.src='https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=300&h=450&fit=crop'">
@@ -205,7 +213,7 @@ function createMovieCard(movie) {
             <p class="movie-description">${movie.description}</p>
         </div>
     `;
-    
+
     // Add click animation
     card.addEventListener('click', () => {
         card.style.transform = 'scale(0.98)';
@@ -213,9 +221,149 @@ function createMovieCard(movie) {
             card.style.transform = '';
         }, 150);
     });
-    
+
     return card;
 }
+
+/* ============================================
+   AI ASSISTANT CHAT
+   ============================================ */
+
+// Handle AI chat submission
+async function sendAIMessage() {
+    const message = aiInput.value.trim();
+
+    if (!message) {
+        showNotification('Please enter a question', 'warning');
+        return;
+    }
+
+    // Hide welcome message
+    document.querySelector('.chat-welcome')?.classList.add('hidden');
+
+    // Add user message to chat
+    addMessageToChat('user', message);
+
+    // Clear input
+    aiInput.value = '';
+
+    // Show typing indicator
+    const typingId = addTypingIndicator();
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/ask_ai`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                message: message,
+                conversation_history: conversationHistory
+            })
+        });
+
+        const data = await response.json();
+
+        // Remove typing indicator
+        removeTypingIndicator(typingId);
+
+        if (data.error && !data.response) {
+            showNotification('AI assistant is not configured. Check OPENAI_API_KEY in .env file', 'error');
+            addMessageToChat('ai', 'Sorry, the AI assistant is not currently available. Please  configure your OpenAI API key in the .env file.');
+            return;
+        }
+
+        // Add AI response to chat
+        addMessageToChat('ai', data.response);
+
+        // Update conversation history
+        conversationHistory.push(
+            { role: 'user', content: message },
+            { role: 'assistant', content: data.response }
+        );
+
+        // Keep only last 10 messages to manage token usage
+        if (conversationHistory.length > 10) {
+            conversationHistory = conversationHistory.slice(-10);
+        }
+
+    } catch (error) {
+        removeTypingIndicator(typingId);
+        console.error('Error asking AI:', error);
+        showNotification('Failed to get AI response. Make sure the server is running!', 'error');
+        addMessageToChat('ai', 'Sorry, I encountered an error. Please try again.');
+    }
+}
+
+// Add message to chat
+function addMessageToChat(sender, text) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `chat-message ${sender}`;
+
+    const avatar = sender === 'ai' ? '🤖' : '👤';
+
+    messageDiv.innerHTML = `
+        <div class="message-avatar">${avatar}</div>
+        <div class="message-bubble">
+            <div class="message-text">${text}</div>
+        </div>
+    `;
+
+    chatMessages.appendChild(messageDiv);
+
+    // Scroll to bottom
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+}
+
+// Add typing indicator
+function addTypingIndicator() {
+    const typingDiv = document.createElement('div');
+    typingDiv.className = 'chat-message ai typing-message';
+    typingDiv.id = 'typing-indicator';
+
+    typingDiv.innerHTML = `
+        <div class="message-avatar">🤖</div>
+        <div class="message-bubble">
+            <div class="typing-indicator">
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            </div>
+        </div>
+    `;
+
+    chatMessages.appendChild(typingDiv);
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+
+    return 'typing-indicator';
+}
+
+// Remove typing indicator
+function removeTypingIndicator(id) {
+    const indicator = document.getElementById(id);
+    if (indicator) {
+        indicator.remove();
+    }
+}
+
+// AI button click handler
+askAiBtn.addEventListener('click', sendAIMessage);
+
+// Enter key to send
+aiInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendAIMessage();
+    }
+});
+
+// Quick prompt buttons
+quickPromptBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        aiInput.value = btn.dataset.prompt;
+        sendAIMessage();
+    });
+});
 
 /* ============================================
    UTILITY FUNCTIONS
@@ -249,9 +397,9 @@ function showNotification(message, type = 'info') {
         max-width: 400px;
     `;
     notification.textContent = message;
-    
+
     document.body.appendChild(notification);
-    
+
     // Remove after 4 seconds
     setTimeout(() => {
         notification.style.animation = 'slideOut 0.3s ease';
@@ -293,7 +441,7 @@ async function checkServerHealth() {
     try {
         const response = await fetch(`${API_BASE_URL}/health`);
         const data = await response.json();
-        
+
         if (data.status === 'healthy') {
             console.log('✅ Server is healthy');
             console.log(`📊 Loaded ${data.movie_count} movies`);

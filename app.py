@@ -5,6 +5,7 @@ import os
 from sentiment_analyzer import SentimentAnalyzer
 from movie_database import MovieDatabase
 from recommendation_engine import RecommendationEngine
+from ai_assistant import MovieAIAssistant
 
 app = Flask(__name__, static_folder='.')
 CORS(app)
@@ -13,6 +14,7 @@ CORS(app)
 sentiment_analyzer = SentimentAnalyzer()
 movie_db = MovieDatabase('movies.json')
 recommendation_engine = RecommendationEngine(movie_db)
+ai_assistant = MovieAIAssistant(movie_db)
 
 @app.route('/')
 def index():
@@ -193,6 +195,48 @@ def get_similar(movie_id):
     except Exception as e:
         return jsonify({
             'error': f'Server error: {str(e)}'
+        }), 500
+
+@app.route('/api/ask_ai', methods=['POST'])
+def ask_ai():
+    """
+    Ask the AI assistant about movies
+    
+    Expected JSON body:
+    {
+        "message": "What movie should I watch tonight?",
+        "conversation_history": []  # optional
+    }
+    
+    Returns:
+    {
+        "response": "AI response text",
+        "success": true
+    }
+    """
+    try:
+        data = request.get_json()
+        
+        if not data or 'message' not in data:
+            return jsonify({
+                'error': 'Missing "message" field in request body'
+            }), 400
+        
+        message = data['message']
+        conversation_history = data.get('conversation_history', [])
+        
+        # Get AI response
+        result = ai_assistant.chat(message, conversation_history)
+        
+        if 'error' in result:
+            return jsonify(result), 400
+        
+        return jsonify(result)
+    
+    except Exception as e:
+        return jsonify({
+            'error': f'Server error: {str(e)}',
+            'response': 'Sorry, I encountered an error. Please try again.'
         }), 500
 
 @app.route('/api/health', methods=['GET'])

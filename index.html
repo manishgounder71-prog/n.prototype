@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CineScope - Movie Sentiment Analysis & Recommendations</title>
-    <meta name="description" content="Analyze movie reviews and get personalized movie recommendations based on your mood with advanced sentiment analysis">
+    <meta name="description"
+        content="Analyze movie reviews and get personalized movie recommendations based on your mood with advanced sentiment analysis">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
     <!-- Animated Background -->
     <div class="animated-bg">
@@ -42,11 +46,9 @@
             <div class="glass-card">
                 <div class="review-input-container">
                     <label for="reviewInput">Write or paste a movie review:</label>
-                    <textarea 
-                        id="reviewInput" 
+                    <textarea id="reviewInput"
                         placeholder="Example: This movie was absolutely incredible! The cinematography was stunning, and the plot kept me on the edge of my seat. Best film I've seen this year!"
-                        rows="5"
-                    ></textarea>
+                        rows="5"></textarea>
                     <button id="analyzeBtn" class="btn btn-primary">
                         <span class="btn-text">Analyze Sentiment</span>
                         <span class="btn-icon">✨</span>
@@ -133,6 +135,49 @@
             </div>
         </section>
 
+        <!-- AI Assistant Section -->
+        <section class="section ai-section" id="aiSection">
+            <div class="section-header">
+                <h2>
+                    <span class="section-icon">🤖</span>
+                    Ask AI Assistant
+                </h2>
+                <p class="section-subtitle">Get personalized movie recommendations through AI conversation</p>
+            </div>
+
+            <div class="glass-card ai-card">
+                <!-- Chat Container -->
+                <div class="chat-container" id="chatContainer">
+                    <div class="chat-welcome">
+                        <div class="ai-avatar">🤖</div>
+                        <p>Hi! I'm your movie assistant. Ask me anything about movies or tell me what you'd like to
+                            watch!</p>
+                        <div class="quick-prompts">
+                            <button class="quick-prompt-btn" data-prompt="What movie should I watch tonight?">What
+                                should I watch tonight?</button>
+                            <button class="quick-prompt-btn" data-prompt="Recommend me a thriller movie">Recommend a
+                                thriller</button>
+                            <button class="quick-prompt-btn" data-prompt="I want to watch something funny">Something
+                                funny</button>
+                        </div>
+                    </div>
+                    <div class="chat-messages" id="chatMessages">
+                        <!-- Messages will be added here dynamically -->
+                    </div>
+                </div>
+
+                <!-- Input Area -->
+                <div class="chat-input-container">
+                    <input type="text" id="aiInput"
+                        placeholder="Ask me about movies... (e.g., 'What's a good action movie?')" maxlength="200" />
+                    <button id="askAiBtn" class="btn btn-primary ai-btn">
+                        <span class="btn-text">Send</span>
+                        <span class="btn-icon">🚀</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
         <!-- Recommendations Section -->
         <section class="section recommendations-section hidden" id="recommendationsSection">
             <div class="section-header">
@@ -162,4 +207,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>
