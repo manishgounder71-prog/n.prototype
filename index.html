@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineScope - Movie Sentiment Analysis & Recommendations</title>
+    <meta name="description" content="Analyze movie reviews and get personalized movie recommendations based on your mood with advanced sentiment analysis">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Hero Section -->
+        <header class="hero">
+            <div class="logo">
+                <span class="logo-icon">🎬</span>
+                <h1>CineScope</h1>
+            </div>
+            <p class="tagline">Discover your perfect movie match through AI-powered sentiment analysis</p>
+        </header>
+
+        <!-- Sentiment Analysis Section -->
+        <section class="section sentiment-section" id="sentimentSection">
+            <div class="section-header">
+                <h2>
+                    <span class="section-icon">📝</span>
+                    Review Sentiment Analyzer
+                </h2>
+                <p class="section-subtitle">Analyze the emotional tone of any movie review using advanced NLP</p>
+            </div>
+
+            <div class="glass-card">
+                <div class="review-input-container">
+                    <label for="reviewInput">Write or paste a movie review:</label>
+                    <textarea 
+                        id="reviewInput" 
+                        placeholder="Example: This movie was absolutely incredible! The cinematography was stunning, and the plot kept me on the edge of my seat. Best film I've seen this year!"
+                        rows="5"
+                    ></textarea>
+                    <button id="analyzeBtn" class="btn btn-primary">
+                        <span class="btn-text">Analyze Sentiment</span>
+                        <span class="btn-icon">✨</span>
+                    </button>
+                </div>
+
+                <!-- Sentiment Results -->
+                <div id="sentimentResults" class="sentiment-results hidden">
+                    <div class="results-header">
+                        <h3>Analysis Results</h3>
+                    </div>
+                    <div class="sentiment-display">
+                        <div class="sentiment-emoji" id="sentimentEmoji">😊</div>
+                        <div class="sentiment-info">
+                            <div class="sentiment-label" id="sentimentLabel">Positive</div>
+                            <div class="confidence-bar-container">
+                                <div class="confidence-label">Confidence</div>
+                                <div class="confidence-bar">
+                                    <div class="confidence-fill" id="confidenceFill"></div>
+                                </div>
+                                <div class="confidence-value" id="confidenceValue">0%</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sentiment-scores">
+                        <div class="score-item">
+                            <span class="score-label">Positive</span>
+                            <span class="score-value" id="scorePositive">0%</span>
+                        </div>
+                        <div class="score-item">
+                            <span class="score-label">Neutral</span>
+                            <span class="score-value" id="scoreNeutral">0%</span>
+                        </div>
+                        <div class="score-item">
+                            <span class="score-label">Negative</span>
+                            <span class="score-value" id="scoreNegative">0%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mood Selection Section -->
+        <section class="section mood-section" id="moodSection">
+            <div class="section-header">
+                <h2>
+                    <span class="section-icon">🎭</span>
+                    How Are You Feeling?
+                </h2>
+                <p class="section-subtitle">Select your current mood to get personalized movie recommendations</p>
+            </div>
+
+            <div class="mood-grid">
+                <div class="mood-card" data-mood="happy">
+                    <div class="mood-icon">😊</div>
+                    <div class="mood-name">Happy</div>
+                    <div class="mood-description">Feel-good movies</div>
+                </div>
+                <div class="mood-card" data-mood="sad">
+                    <div class="mood-icon">😢</div>
+                    <div class="mood-name">Sad</div>
+                    <div class="mood-description">Emotional stories</div>
+                </div>
+                <div class="mood-card" data-mood="excited">
+                    <div class="mood-icon">🤩</div>
+                    <div class="mood-name">Excited</div>
+                    <div class="mood-description">High-energy action</div>
+                </div>
+                <div class="mood-card" data-mood="relaxed">
+                    <div class="mood-icon">😌</div>
+                    <div class="mood-name">Relaxed</div>
+                    <div class="mood-description">Calming content</div>
+                </div>
+                <div class="mood-card" data-mood="scared">
+                    <div class="mood-icon">😱</div>
+                    <div class="mood-name">Scared</div>
+                    <div class="mood-description">Thrilling suspense</div>
+                </div>
+                <div class="mood-card" data-mood="inspired">
+                    <div class="mood-icon">💪</div>
+                    <div class="mood-name">Inspired</div>
+                    <div class="mood-description">Motivational tales</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recommendations Section -->
+        <section class="section recommendations-section hidden" id="recommendationsSection">
+            <div class="section-header">
+                <h2>
+                    <span class="section-icon">🎥</span>
+                    Recommended For You
+                </h2>
+                <p class="section-subtitle" id="recommendationsSubtitle">Based on your mood</p>
+            </div>
+
+            <div class="movies-grid" id="moviesGrid">
+                <!-- Movies will be dynamically inserted here -->
+            </div>
+        </section>
+
+        <!-- Loading Spinner -->
+        <div class="loading-overlay hidden" id="loadingOverlay">
+            <div class="spinner"></div>
+            <p>Analyzing...</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Powered by VADER Sentiment Analysis & Flask • Built with ❤️</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

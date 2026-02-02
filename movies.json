@@ -1,0 +1,274 @@
+{
+  "movies": [
+    {
+      "id": 1,
+      "title": "The Shawshank Redemption",
+      "year": 1994,
+      "genres": ["Drama"],
+      "rating": 9.3,
+      "description": "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
+      "poster": "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=300&h=450&fit=crop"
+    },
+    {
+      "id": 2,
+      "title": "The Dark Knight",
+      "year": 2008,
+      "genres": ["Action", "Crime", "Drama"],
+      "rating": 9.0,
+      "description": "When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests.",
+      "poster": "https://images.unsplash.com/photo-1509347528160-9a9e33742cdb?w=300&h=450&fit=crop"
+    },
+    {
+      "id": 3,
+      "title": "Inception",
+      "year": 2010,
+      "genres": ["Action", "Sci-Fi", "Thriller"],
+      "rating": 8.8,
+      "description": "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea.",
+      "poster": "https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=300&h=450&fit=crop"
+    },
+    {
+      "id": 4,
+      "title": "Forrest Gump",
+      "year": 1994,
+      "genres": ["Drama", "Romance"],
+      "rating": 8.8,
+      "description": "The presidencies of Kennedy and Johnson unfold through the perspective of an Alabama man with an IQ of 75.",
+      "poster": "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=300&h=450&fit=crop"
+    },
+    {
+      "id": 5,
+      "title": "The Matrix",
+      "year": 1999,
+      "genres": ["Action", "Sci-Fi"],
+      "rating": 8.7,
+      "description": "A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.",
+      "poster": "https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?w=300&h=450&fit=crop"
+    },
+    {
+      "id": 6,
+      "title": "The Godfather",
+      "year": 1972,
+      "genres": ["Crime", "Drama"],
+      "rating": 9.2,
+      "description": "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.",
+      "poster": "https://images.unsplash.com/photo-1594908900066-3f47337549d8?w=300&h=450&fit=crop"
+    },
+    {
+      "id": 7,
+      "title": "Pulp Fiction",
+      "year": 1994,
+      "genres": ["Crime", "Drama"],
+      "rating": 8.9,
+      "description": "The lives of two mob hitmen, a boxer, a gangster and his wife intertwine in four tales of violence and redemption.",
+      "poster": "https://images.unsplash.com/photo-1585951237318-9ea5e175b891?w=300&h=450&fit=crop"
+    },
+    {
+      "id": 8,
+      "title": "The Lion King",
+      "year": 1994,
+      "genres": ["Animation", "Adventure", "Family"],
+      "rating": 8.5,
+      "description": "Lion prince Simba and his father are targeted by his bitter uncle, who wants to ascend the throne himself.",
+      "poster": "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=300&h=450&fit=crop"
+    },
+    {
+      "id": 9,
+      "title": "Spirited Away",
+      "year": 2001,
+      "genres": ["Animation", "Adventure", "Fantasy"],
+      "rating": 8.6,
+      "description": "During her family's move to the suburbs, a sullen 10-year-old girl wanders into a world ruled by gods, witches, and spirits.",
+      "poster": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=450&fit=crop"
+    },
+    {
+      "id": 10,
+      "title": "Interstellar",
+      "year": 2014,
+      "genres": ["Adventure", "Drama", "Sci-Fi"],
+      "rating": 8.6,
+      "description": "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.",
+      "poster": "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=300&h=450&fit=crop"
+    },
+    {
+      "id": 11,
+      "title": "The Conjuring",
+      "year": 2013,
+      "genres": ["Horror", "Mystery", "Thriller"],
+      "rating": 7.5,
+      "description": "Paranormal investigators work to help a family terrorized by a dark presence in their farmhouse.",
+      "poster": "https://images.unsplash.com/photo-1509347528160-9a9e33742cdb?w=300&h=450&fit=crop"
+    },
+    {
+      "id": 12,
+      "title": "A Quiet Place",
+      "year": 2018,
+      "genres": ["Horror", "Drama", "Sci-Fi"],
+      "rating": 7.5,
+      "description": "In a post-apocalyptic world, a family is forced to live in silence while hiding from monsters with ultra-sensitive hearing.",
+      "poster": "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=300&h=450&fit=crop"
+    },
+    {
+      "id": 13,
+      "title": "Crazy, Stupid, Love",
+      "year": 2011,
+      "genres": ["Comedy", "Romance"],
+      "rating": 7.4,
+      "description": "A middle-aged husband's life changes dramatically when his wife asks him for a divorce.",
+      "poster": "https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?w=300&h=450&fit=crop"
+    },
+    {
+      "id": 14,
+      "title": "The Hangover",
+      "year": 2009,
+      "genres": ["Comedy"],
+      "rating": 7.7,
+      "description": "Three buddies wake up from a bachelor party in Las Vegas, with no memory of the previous night and the bachelor missing.",
+      "poster": "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300&h=450&fit=crop"
+    },
+    {
+      "id": 15,
+      "title": "La La Land",
+      "year": 2016,
+      "genres": ["Comedy", "Drama", "Musical", "Romance"],
+      "rating": 8.0,
+      "description": "While navigating their careers in Los Angeles, a pianist and an actress fall in love while attempting to reconcile their aspirations.",
+      "poster": "https://images.unsplash.com/photo-1499364615650-ec38552f4f34?w=300&h=450&fit=crop"
+    },
+    {
+      "id": 16,
+      "title": "The Social Network",
+      "year": 2010,
+      "genres": ["Biography", "Drama"],
+      "rating": 7.8,
+      "description": "As Harvard student Mark Zuckerberg creates the social networking site that would become known as Facebook.",
+      "poster": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=300&h=450&fit=crop"
+    },
+    {
+      "id": 17,
+      "title": "Rocky",
+      "year": 1976,
+      "genres": ["Drama", "Sports"],
+      "rating": 8.1,
+      "description": "A small-time boxer gets a supremely rare chance to fight a heavyweight champion in a bout.",
+      "poster": "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=300&h=450&fit=crop"
+    },
+    {
+      "id": 18,
+      "title": "The Pursuit of Happyness",
+      "year": 2006,
+      "genres": ["Biography", "Drama"],
+      "rating": 8.0,
+      "description": "A struggling salesman takes custody of his son as he's poised to begin a life-changing professional career.",
+      "poster": "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=300&h=450&fit=crop"
+    },
+    {
+      "id": 19,
+      "title": "Planet Earth II",
+      "year": 2016,
+      "genres": ["Documentary"],
+      "rating": 9.5,
+      "description": "David Attenborough returns with a new wildlife documentary that shows life in a variety of habitats.",
+      "poster": "https://images.unsplash.com/photo-1518710843675-2540dd79065c?w=300&h=450&fit=crop"
+    },
+    {
+      "id": 20,
+      "title": "Our Planet",
+      "year": 2019,
+      "genres": ["Documentary"],
+      "rating": 9.3,
+      "description": "Documentary series focusing on the breadth of the diversity of habitats around the world.",
+      "poster": "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=300&h=450&fit=crop"
+    },
+    {
+      "id": 21,
+      "title": "Schindler's List",
+      "year": 1993,
+      "genres": ["Biography", "Drama", "History"],
+      "rating": 9.0,
+      "description": "In German-occupied Poland during World War II, industrialist Oskar Schindler gradually becomes concerned for his Jewish workforce.",
+      "poster": "https://images.unsplash.com/photo-1594908900066-3f47337549d8?w=300&h=450&fit=crop"
+    },
+    {
+      "id": 22,
+      "title": "Toy Story",
+      "year": 1995,
+      "genres": ["Animation", "Adventure", "Comedy", "Family"],
+      "rating": 8.3,
+      "description": "A cowboy doll is profoundly threatened and jealous when a new spaceman figure supplants him as top toy in a boy's room.",
+      "poster": "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=300&h=450&fit=crop"
+    },
+    {
+      "id": 23,
+      "title": "Finding Nemo",
+      "year": 2003,
+      "genres": ["Animation", "Adventure", "Comedy", "Family"],
+      "rating": 8.1,
+      "description": "After his son is captured in the Great Barrier Reef and taken to Sydney, a timid clownfish sets out on a journey to bring him home.",
+      "poster": "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=300&h=450&fit=crop"
+    },
+    {
+      "id": 24,
+      "title": "The Silence of the Lambs",
+      "year": 1991,
+      "genres": ["Crime", "Drama", "Thriller"],
+      "rating": 8.6,
+      "description": "A young FBI cadet must receive the help of an incarcerated cannibal killer to catch another serial killer.",
+      "poster": "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=300&h=450&fit=crop"
+    },
+    {
+      "id": 25,
+      "title": "Superbad",
+      "year": 2007,
+      "genres": ["Comedy"],
+      "rating": 7.6,
+      "description": "Two co-dependent high school seniors are forced to deal with separation anxiety after their plan to stage a booze-soaked party goes awry.",
+      "poster": "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=300&h=450&fit=crop"
+    },
+    {
+      "id": 26,
+      "title": "Avatar",
+      "year": 2009,
+      "genres": ["Action", "Adventure", "Fantasy", "Sci-Fi"],
+      "rating": 7.8,
+      "description": "A paraplegic Marine dispatched to the moon Pandora on a unique mission becomes torn between following his orders and protecting the world.",
+      "poster": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=450&fit=crop"
+    },
+    {
+      "id": 27,
+      "title": "The Notebook",
+      "year": 2004,
+      "genres": ["Drama", "Romance"],
+      "rating": 7.8,
+      "description": "A poor yet passionate young man falls in love with a rich young woman, giving her a sense of freedom.",
+      "poster": "https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?w=300&h=450&fit=crop"
+    },
+    {
+      "id": 28,
+      "title": "Mad Max: Fury Road",
+      "year": 2015,
+      "genres": ["Action", "Adventure", "Sci-Fi"],
+      "rating": 8.1,
+      "description": "In a post-apocalyptic wasteland, a woman rebels against a tyrannical ruler in search for her homeland.",
+      "poster": "https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=300&h=450&fit=crop"
+    },
+    {
+      "id": 29,
+      "title": "Hereditary",
+      "year": 2018,
+      "genres": ["Drama", "Horror", "Mystery"],
+      "rating": 7.3,
+      "description": "A grieving family is haunted by tragic and disturbing occurrences after the death of their secretive grandmother.",
+      "poster": "https://images.unsplash.com/photo-1509347528160-9a9e33742cdb?w=300&h=450&fit=crop"
+    },
+    {
+      "id": 30,
+      "title": "The Grand Budapest Hotel",
+      "year": 2014,
+      "genres": ["Adventure", "Comedy", "Crime"],
+      "rating": 8.1,
+      "description": "A writer encounters the owner of an aging high-class hotel, who tells him of his early years serving as a lobby boy.",
+      "poster": "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=300&h=450&fit=crop"
+    }
+  ]
+}
