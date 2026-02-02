@@ -210,10 +210,12 @@ if __name__ == '__main__':
     print(f"Loaded {len(movie_db.get_all_movies())} movies")
     print(f"Available moods: {', '.join(recommendation_engine.mood_mappings.keys())}")
     print("=" * 50)
-    print("Starting server at http://localhost:5000")
+    print("Starting server")
     print("=" * 50)
     
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    # Get port from environment variable (for Render/Heroku) or use 5000 locally
+    port = int(os.environ.get('PORT', 5000))
+    app.run(debug=False, host='0.0.0.0', port=port)
 
 # Expose app for Vercel/WSGI servers
 # This allows Vercel to import 'app' directly
