@@ -10,6 +10,7 @@ An AI-powered web application that analyzes movie review sentiment and recommend
 
 - **🎭 Sentiment Analysis**: Analyze movie reviews using VADER NLP to detect positive, negative, or neutral sentiment with confidence scores
 - **🎯 Mood-Based Recommendations**: Get personalized movie suggestions based on 6 different moods (Happy, Sad, Excited, Relaxed, Scared, Inspired)
+- **🤖 AI Assistant**: Chat with an AI powered by OpenAI GPT-3.5 to get personalized movie recommendations through natural conversation
 - **💎 Modern UI**: Beautiful glassmorphism design with dark theme, gradients, and smooth animations
 - **📊 30-Movie Database**: Curated collection across multiple genres with ratings and descriptions
 - **⚡ Real-time Analysis**: Instant sentiment feedback and dynamic recommendations
@@ -23,7 +24,18 @@ cd d:\n.prototype
 pip install -r requirements.txt
 ```
 
-### 2. Run the Server
+### 2. Configure OpenAI API Key (Optional but Recommended)
+
+To enable the AI Assistant feature, add your OpenAI API key to the `.env` file:
+
+```bash
+# Edit .env file
+OPENAI_API_KEY=your_actual_openai_key_here
+```
+
+> **Note**: You can use the system without the API key, but the AI Assistant feature won't work.
+
+### 3. Run the Server
 
 ```bash
 python app.py
@@ -64,6 +76,13 @@ Navigate to: **http://localhost:5000**
 - 😌 **Relaxed** - Calming content (Documentary, Animation)
 - 😱 **Scared** - Thrilling suspense (Horror, Mystery)
 - 💪 **Inspired** - Motivational tales (Biography, Sports)
+
+### Ask AI Assistant
+
+1. Scroll to the "Ask AI Assistant" section
+2. Click a quick prompt button or type your own question
+3. Get personalized movie recommendations through AI conversation
+4. Examples: "What should I watch tonight?", "Recommend a thriller movie"
 
 ## 🏗️ Technical Stack
 
