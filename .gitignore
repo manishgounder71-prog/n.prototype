@@ -46,9 +46,13 @@ Thumbs.db
 # NLTK Data
 nltk_data/
 
-# Environment variables
+# Environment variables - CRITICAL: Never commit these!
 .env
 .env.local
+.env.production
+.env.*.local
+*.key
+*_key.txt
 
 # Logs
 *.log
