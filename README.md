@@ -11,7 +11,7 @@ An AI-powered web application that analyzes movie review sentiment and recommend
 - **🎭 Sentiment Analysis**: Analyze movie reviews using VADER NLP to detect positive, negative, or neutral sentiment with confidence scores
 - **🎯 Mood-Based Recommendations**: Get personalized movie suggestions based on 6 different moods (Happy, Sad, Excited, Relaxed, Scared, Inspired)
 - **💎 Modern UI**: Beautiful glassmorphism design with dark theme, gradients, and smooth animations
-- **📊 30-Movie Database**: Curated collection across multiple genres with ratings and descriptions
+- **📊 600+ Movie Database**: Massive curated collection across multiple genres including Bollywood, Anime, and International Cinema
 - **⚡ Real-time Analysis**: Instant sentiment feedback and dynamic recommendations
 
 ## 🚀 Quick Start
@@ -30,6 +30,7 @@ python app.py
 ```
 
 Or with full Python path:
+
 ```bash
 C:\Users\manis\AppData\Local\Microsoft\WindowsApps\PythonSoftwareFoundation.Python.3.12_qbz5n2kfra8p0\python.exe app.py
 ```
@@ -47,6 +48,7 @@ Navigate to: **http://localhost:5000**
 3. View the sentiment results with confidence scores
 
 **Example Review**:
+
 > "This movie was absolutely incredible! The cinematography was stunning and the acting was phenomenal."
 
 **Result**: Positive sentiment with 89% confidence
@@ -58,6 +60,7 @@ Navigate to: **http://localhost:5000**
 3. Each recommendation includes title, rating, genres, and description
 
 **Available Moods**:
+
 - 😊 **Happy** - Feel-good movies (Comedy, Romance, Musical)
 - 😢 **Sad** - Emotional stories (Drama, Romance)
 - 🤩 **Excited** - High-energy action (Action, Thriller, Sci-Fi)
@@ -68,11 +71,13 @@ Navigate to: **http://localhost:5000**
 ## 🏗️ Technical Stack
 
 **Backend**:
+
 - Flask 3.0.0 - Web framework
 - NLTK with VADER - Sentiment analysis
 - TextBlob - Additional sentiment metrics
 
 **Frontend**:
+
 - HTML5, CSS3, JavaScript (ES6+)
 - Vanilla JS with Fetch API
 - Modern glassmorphism design
@@ -111,13 +116,14 @@ d:/n.prototype/
 
 ## 📊 Movie Database
 
-The system includes 30 carefully selected movies:
-- The Shawshank Redemption (9.3)
-- The Dark Knight (9.0)
-- Inception (8.8)
-- Spirited Away (8.6)
-- La La Land (8.0)
-- And 25 more across all genres!
+## 📊 Movie Database
+
+The system includes over 600 carefully selected movies across all genres:
+
+- **Global Cinema**: Hollywood, Bollywood, South Indian, Korean, European
+- **Diverse Genres**: Anime, Documentaries, Thrillers, Sci-Fi, Horror, Romance
+- **Classics & Hits**: From The Godfather to Spider-Man: Across the Spider-Verse
+- **Hidden Gems**: Carefully curated indie and critically acclaimed films
 
 ## 🔧 Requirements
 
@@ -135,6 +141,7 @@ The system includes 30 carefully selected movies:
 ## 🎯 What's Next
 
 Explore the complete walkthrough for detailed information:
+
 - See `walkthrough.md` for comprehensive documentation
 - View `implementation_plan.md` for technical architecture
 - Check `task.md` for development progress

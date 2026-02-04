@@ -94,9 +94,10 @@ def get_recommendations():
         
         mood = data['mood']
         limit = data.get('limit', 6)  # Default to 6 recommendations
+        exclude_ids = data.get('exclude_ids', []) # Get exclusions list
         
         # Get recommendations
-        result = recommendation_engine.get_recommendations_by_mood(mood, limit)
+        result = recommendation_engine.get_recommendations_by_mood(mood, limit, exclude_ids)
         
         if 'error' in result:
             return jsonify(result), 400
@@ -215,7 +216,7 @@ if __name__ == '__main__':
     
     # Get port from environment variable (for Render/Heroku) or use 5000 locally
     port = int(os.environ.get('PORT', 5000))
-    app.run(debug=False, host='0.0.0.0', port=port)
+    app.run(debug=True, host='0.0.0.0', port=port)
 
 # Expose app for Vercel/WSGI servers
 # This allows Vercel to import 'app' directly

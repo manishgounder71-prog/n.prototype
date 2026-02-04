@@ -5,6 +5,7 @@ const API_BASE_URL = window.location.hostname === 'localhost'
 
 // State Management
 let currentMood = null;
+let seenMovieIds = new Set(); // Track seen movies to avoid duplicates
 
 // DOM Elements
 const reviewInput = document.getElementById('reviewInput');
@@ -128,7 +129,8 @@ async function getRecommendations(mood) {
             },
             body: JSON.stringify({
                 mood: mood,
-                limit: 6
+                limit: 40,
+                exclude_ids: Array.from(seenMovieIds) // Send list of seen IDs
             })
         });
 
@@ -172,6 +174,7 @@ function displayRecommendations(data) {
 
     // Add movie cards
     data.recommendations.forEach(movie => {
+        seenMovieIds.add(movie.id); // Add to seen list to avoid duplicates next time
         const movieCard = createMovieCard(movie);
         moviesGrid.appendChild(movieCard);
     });
@@ -310,5 +313,5 @@ async function checkServerHealth() {
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
     checkServerHealth();
-    console.log('🎬 CineScope initialized!');
+    console.log('🎬 CineScope initialized with unique recommendation logic!');
 });

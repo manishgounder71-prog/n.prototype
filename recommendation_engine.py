@@ -38,13 +38,14 @@ class RecommendationEngine:
             }
         }
     
-    def get_recommendations_by_mood(self, mood, limit=6):
+    def get_recommendations_by_mood(self, mood, limit=6, exclude_ids=None):
         """
         Get movie recommendations based on user's mood
         
         Args:
             mood: User's current mood (happy, sad, excited, relaxed, scared, inspired)
             limit: Maximum number of recommendations to return
+            exclude_ids: List of movie IDs to exclude from results
         
         Returns:
             Dictionary with recommendations and mood info
@@ -63,6 +64,10 @@ class RecommendationEngine:
         
         # Get movies matching the genres
         matching_movies = self.db.get_movies_by_genres(genres)
+        
+        # Filter exclusions
+        if exclude_ids:
+            matching_movies = [m for m in matching_movies if m['id'] not in exclude_ids]
         
         # Filter by minimum rating
         filtered_movies = self.db.filter_by_rating(matching_movies, min_rating)
