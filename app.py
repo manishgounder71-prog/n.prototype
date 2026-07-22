@@ -10,8 +10,11 @@ app = Flask(__name__, static_folder='.')
 CORS(app)
 
 # Initialize components
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+movies_json_path = os.path.join(BASE_DIR, 'movies.json')
+
 sentiment_analyzer = SentimentAnalyzer()
-movie_db = MovieDatabase('movies.json')
+movie_db = MovieDatabase(movies_json_path)
 recommendation_engine = RecommendationEngine(movie_db)
 
 @app.route('/')

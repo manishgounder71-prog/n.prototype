@@ -1,14 +1,21 @@
+import os
 from textblob import TextBlob
 import nltk
 from nltk.sentiment import SentimentIntensityAnalyzer
 
+# Configure writable directory for NLTK in serverless environments (Vercel/Lambda)
+nltk_data_dir = os.path.join('/tmp', 'nltk_data')
+os.makedirs(nltk_data_dir, exist_ok=True)
+if nltk_data_dir not in nltk.data.path:
+    nltk.data.path.append(nltk_data_dir)
+
 class SentimentAnalyzer:
     def __init__(self):
-        # Download required NLTK data
+        # Download required NLTK data to writable /tmp directory
         try:
             nltk.data.find('sentiment/vader_lexicon.zip')
         except LookupError:
-            nltk.download('vader_lexicon', quiet=True)
+            nltk.download('vader_lexicon', download_dir=nltk_data_dir, quiet=True)
         
         self.sia = SentimentIntensityAnalyzer()
     
