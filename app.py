@@ -17,6 +17,9 @@ sentiment_analyzer = SentimentAnalyzer()
 movie_db = MovieDatabase(movies_json_path)
 recommendation_engine = RecommendationEngine(movie_db)
 
+ALLOWED_STATIC_EXTENSIONS = {'.html', '.css', '.js', '.png', '.jpg', '.jpeg', '.gif', '.svg', '.ico', '.woff', '.woff2', '.ttf'}
+ALLOWED_EXACT_FILES = {'movies.json', 'favicon.ico'}
+
 @app.route('/')
 def index():
     """Serve the main HTML page"""
@@ -24,8 +27,21 @@ def index():
 
 @app.route('/<path:path>')
 def serve_static(path):
-    """Serve static files (CSS, JS)"""
-    return send_from_directory('.', path)
+    """Serve static files safely (CSS, JS, images)"""
+    filename = os.path.basename(path)
+    ext = os.path.splitext(filename)[1].lower()
+    
+    # Block hidden files, python files, env files, security docs, etc.
+    if (filename.startswith('.') or 
+        filename.lower() in ['.env', 'app.py', 'procfile', 'requirements.txt', 'requirements-vercel.txt'] or
+        (ext in ['.py', '.env', '.md', '.txt', '.pyc', '.json'] and filename not in ALLOWED_EXACT_FILES) or
+        (ext not in ALLOWED_STATIC_EXTENSIONS and filename not in ALLOWED_EXACT_FILES)):
+        return jsonify({'error': 'Access denied'}), 404
+        
+    try:
+        return send_from_directory('.', path)
+    except Exception:
+        return jsonify({'error': 'File not found'}), 404
 
 @app.route('/api/analyze_sentiment', methods=['POST'])
 def analyze_sentiment():

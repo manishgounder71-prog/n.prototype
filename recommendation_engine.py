@@ -32,7 +32,7 @@ class RecommendationEngine:
                 'description': 'Thrilling films to embrace the fear'
             },
             'inspired': {
-                'genres': ['Biography', 'Documentary', 'Sports', 'Drama'],
+                'genres': ['Biography', 'Documentary', 'Sports', 'Sport', 'Drama'],
                 'min_rating': 7.5,
                 'description': 'Motivational stories to fuel your ambition'
             }
@@ -63,14 +63,23 @@ class RecommendationEngine:
         min_rating = mood_config['min_rating']
         
         # Get movies matching the genres
-        matching_movies = self.db.get_movies_by_genres(genres)
+        all_genre_movies = self.db.get_movies_by_genres(genres)
         
-        # Filter exclusions
+        # Filter exclusions first
+        matching_movies = all_genre_movies
         if exclude_ids:
-            matching_movies = [m for m in matching_movies if m['id'] not in exclude_ids]
+            unseen_movies = [m for m in all_genre_movies if m['id'] not in exclude_ids]
+            # If we still have enough unseen movies, use them. Otherwise fallback to all matching.
+            if len(unseen_movies) >= min(limit, 3):
+                matching_movies = unseen_movies
         
         # Filter by minimum rating
         filtered_movies = self.db.filter_by_rating(matching_movies, min_rating)
+        if not filtered_movies and matching_movies:
+            # Fallback to lower rating bound if min_rating is too strict
+            filtered_movies = self.db.filter_by_rating(matching_movies, 6.0)
+        if not filtered_movies:
+            filtered_movies = matching_movies
         
         # Score and rank movies
         scored_movies = self._score_movies(filtered_movies, genres)

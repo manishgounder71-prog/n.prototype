@@ -1,5 +1,5 @@
-// API Configuration - automatically detects if running locally or on Render
-const API_BASE_URL = window.location.hostname === 'localhost'
+// API Configuration - automatically detects current origin or falls back if opened directly via file://
+const API_BASE_URL = (window.location.protocol === 'file:')
     ? 'http://localhost:5000/api'
     : `${window.location.origin}/api`;
 
@@ -172,12 +172,16 @@ function displayRecommendations(data) {
     // Clear previous movies
     moviesGrid.innerHTML = '';
 
-    // Add movie cards
-    data.recommendations.forEach(movie => {
-        seenMovieIds.add(movie.id); // Add to seen list to avoid duplicates next time
-        const movieCard = createMovieCard(movie);
-        moviesGrid.appendChild(movieCard);
-    });
+    if (!data.recommendations || data.recommendations.length === 0) {
+        moviesGrid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: var(--text-muted);"><p>No recommendations found for this mood currently. Try selecting another mood!</p></div>';
+    } else {
+        // Add movie cards
+        data.recommendations.forEach(movie => {
+            seenMovieIds.add(movie.id); // Add to seen list to avoid duplicates next time
+            const movieCard = createMovieCard(movie);
+            moviesGrid.appendChild(movieCard);
+        });
+    }
 
     // Scroll to recommendations
     setTimeout(() => {

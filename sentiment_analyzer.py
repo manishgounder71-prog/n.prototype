@@ -1,11 +1,12 @@
 import os
+import tempfile
 from textblob import TextBlob
 import nltk
 from nltk.sentiment import SentimentIntensityAnalyzer
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 local_nltk_dir = os.path.join(BASE_DIR, 'nltk_data')
-tmp_nltk_dir = os.path.join('/tmp', 'nltk_data')
+tmp_nltk_dir = os.path.join(tempfile.gettempdir(), 'nltk_data')
 
 for d in [local_nltk_dir, tmp_nltk_dir]:
     if d not in nltk.data.path:
