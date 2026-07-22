@@ -3,19 +3,23 @@ from textblob import TextBlob
 import nltk
 from nltk.sentiment import SentimentIntensityAnalyzer
 
-# Configure writable directory for NLTK in serverless environments (Vercel/Lambda)
-nltk_data_dir = os.path.join('/tmp', 'nltk_data')
-os.makedirs(nltk_data_dir, exist_ok=True)
-if nltk_data_dir not in nltk.data.path:
-    nltk.data.path.append(nltk_data_dir)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+local_nltk_dir = os.path.join(BASE_DIR, 'nltk_data')
+tmp_nltk_dir = os.path.join('/tmp', 'nltk_data')
+
+for d in [local_nltk_dir, tmp_nltk_dir]:
+    if d not in nltk.data.path:
+        nltk.data.path.append(d)
 
 class SentimentAnalyzer:
     def __init__(self):
-        # Download required NLTK data to writable /tmp directory
         try:
             nltk.data.find('sentiment/vader_lexicon.zip')
         except LookupError:
-            nltk.download('vader_lexicon', download_dir=nltk_data_dir, quiet=True)
+            try:
+                nltk.download('vader_lexicon', download_dir=tmp_nltk_dir, quiet=True)
+            except Exception as e:
+                print(f"Warning: NLTK download fallback error: {e}")
         
         self.sia = SentimentIntensityAnalyzer()
     
